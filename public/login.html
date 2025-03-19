@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="catalog.html">Catálogo Completo</a></li>
+                <li><a href="index.html" class="productos-destacados">Productos Destacados</a></li>
+                <li>
+                    <a href="login.html" id="login-icon">
+                        <img src="/public/image/acount.png" alt="Registro/Login" class="icono-login">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="login">
+        <h2>★ Iniciar Sesión ★</h2>
+        <div class="form-container">
+            <form id="loginForm">
+                <label for="email">Correo Electrónico:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="password">Contraseña:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+
+                <input type="submit" value="Iniciar sesión">
+            </form>
+        </div>
+        <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+    </section>
+
+    <footer>
+        <p>Términos y condiciones - Política de privacidad</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Realizar la solicitud POST para iniciar sesión
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Login exitoso') {
+                    alert('Inicio de sesión exitoso');
+                    console.log(data);
+                    // Redirigir al usuario a la página principal o a donde sea necesario
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error || 'Error al iniciar sesión');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al iniciar sesión');
+            });
+        });
+    </script>
+</body>
+</html>
