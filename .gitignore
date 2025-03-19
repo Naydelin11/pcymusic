@@ -1,0 +1,8 @@
+# Ignorar node_modules (paquetes de npm)
+node_modules/
+
+# Ignorar archivos de entorno (variables sensibles)
+.env
+
+# Ignorar archivos de logs
+npm-debug.log
